@@ -1,5 +1,7 @@
 # Ad platforms → BigQuery → dbt
 
+[![CI](https://github.com/filizrabia/ads-to-bigquery/actions/workflows/ci.yml/badge.svg)](https://github.com/filizrabia/ads-to-bigquery/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%E2%80%933.12-3776AB) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 A small, production-shaped pipeline that pulls daily ad performance from ad platforms, loads it into BigQuery idempotently, and models it with dbt into tables that MMM and dashboards can use directly.
 
 ```mermaid

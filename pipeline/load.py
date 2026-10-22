@@ -20,7 +20,8 @@ class SQLiteLoader:
     def __init__(self, path: str = "ads.db", table: str = "ads_daily"):
         self.conn = sqlite3.connect(path)
         self.table = table
-        cols = ", ".join(f"{c} {'REAL' if t in ('NUMERIC', 'FLOAT64') else 'INTEGER' if t == 'INT64' else 'TEXT'}" for c, t in BIGQUERY_SCHEMA)
+        sqlite_type = {"NUMERIC": "REAL", "FLOAT64": "REAL", "INT64": "INTEGER"}
+        cols = ", ".join(f"{c} {sqlite_type.get(t, 'TEXT')}" for c, t in BIGQUERY_SCHEMA)
         self.conn.execute(f"CREATE TABLE IF NOT EXISTS {table} ({cols})")
 
     def replace_slice(self, day: date, platform: str, rows: Sequence[AdRow]) -> int:
