@@ -1,0 +1,11 @@
+# Copy to ~/.dbt/profiles.yml and fill in your project.
+ads_marts:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: my-gcp-project
+      dataset: marketing
+      location: EU
+      threads: 4

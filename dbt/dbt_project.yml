@@ -1,0 +1,13 @@
+name: ads_marts
+version: "1.0.0"
+config-version: 2
+profile: ads_marts
+
+model-paths: ["models"]
+
+models:
+  ads_marts:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

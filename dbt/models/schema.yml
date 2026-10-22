@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_ads__daily
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [date, platform, ad_group_id]
+    columns:
+      - name: date
+        tests: [not_null]
+      - name: platform
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["meta", "google_ads", "tiktok", "fake"]
+      - name: spend
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: fct_channel_daily
+    description: Daily spend and outcomes per platform. Input for MMM and dashboards.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [date, platform]
+
+  - name: mart_campaign_performance
+    description: Weekly campaign KPIs with week-over-week spend change.

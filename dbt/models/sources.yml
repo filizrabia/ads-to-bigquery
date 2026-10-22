@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: marketing
+    tables:
+      - name: ads_daily
+        description: One row per platform, ad group and day, written by the Python loader.
+        loaded_at_field: "cast(date as timestamp)"
+        freshness:
+          warn_after: {count: 2, period: day}
+          error_after: {count: 4, period: day}
