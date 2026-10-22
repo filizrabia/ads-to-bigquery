@@ -1,2 +1,4 @@
 requests>=2.31
 google-cloud-bigquery>=3.20
+matplotlib>=3.8
+pandas>=2.1

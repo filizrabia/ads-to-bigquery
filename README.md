@@ -15,6 +15,12 @@ flowchart LR
     MART --> MMM
 ```
 
+![Example dashboard](images/dashboard.png)
+
+*Built from the pipeline's own output: `python examples/dashboard.py` loads six months of fake Meta and Google Ads data into SQLite, runs the same aggregations as the dbt marts, and renders this view. In a real setup the same marts would feed Looker Studio.*
+
+The ROAS here is what the platforms report, which tends to flatter retargeting and brand campaigns that reach people who would have bought anyway. That is why the same daily table also feeds a marketing mix model ([meridian-mmm-demo](https://github.com/filizrabia/meridian-mmm-demo)) and incrementality tests ([campaign-causal-impact](https://github.com/filizrabia/campaign-causal-impact)).
+
 ## Design choices
 
 - **One schema for every platform.** Each source maps its API response into a single `AdRow` dataclass that validates itself (no negative spend, no clicks above impressions, ISO currency codes). The BigQuery schema lives next to it and an assertion fails if the two drift apart.
@@ -30,7 +36,8 @@ No credentials needed: the fake source and a SQLite target stand in for the real
 ```bash
 pip install -r requirements.txt
 python -m pipeline.run --source fake --target sqlite --start 2026-01-01 --end 2026-01-31
-python -m unittest discover -s tests -t .
+make dashboard   # renders images/dashboard.png
+make test        # unit tests
 ```
 
 ## Run it against BigQuery
